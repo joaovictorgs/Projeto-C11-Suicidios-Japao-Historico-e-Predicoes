@@ -1,16 +1,13 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import os
+from data_processing import process_brazil_data, process_japan_data
 
-# Criar diretório de imagens se não existir
 os.makedirs('images', exist_ok=True)
 
-# Carregar dados
-df = pd.read_csv('data/combined_processed_data.csv')
-
-# Filtrar dados dos países
-df_usa = df[df['Country Name'] == 'United States of America'].groupby('Year')['No of Suicides'].sum().reset_index()
-df_japan = df[df['Country Name'] == 'Japan'].groupby('Year')['No of Suicides'].sum().reset_index()
+df_usa = pd.read_csv('data/combined_processed_data.csv')
+df_usa = df_usa[df_usa['Country Name'] == 'United States of America'].groupby('Year')['No of Suicides'].sum().reset_index()
+df_japan = process_japan_data('data/combined_processed_data.csv')
 
 # Estados Unidos
 plt.figure(figsize=(14, 7))
